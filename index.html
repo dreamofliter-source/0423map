@@ -208,4 +208,127 @@ Object.entries(groupColors).forEach(([g,c]) => {
 
 const map = L.map('map',{ center:[37.503,126.790], zoom:13 });
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
-  attribution:'© OpenSt
+  attribution:'© OpenStreetMap © CARTO', subdomains:'abcd', maxZoom:19
+}).addTo(map);
+
+const districtBoundaries = {
+  wonmi:  [[37.5380,126.7380],[37.5380,126.7950],[37.4850,126.7950],[37.4850,126.7380]],
+  ojeong: [[37.5450,126.7900],[37.5450,126.8420],[37.5050,126.8420],[37.5050,126.7900]],
+  sosa:   [[37.5050,126.7380],[37.5050,126.8420],[37.4550,126.8420],[37.4550,126.7380]],
+};
+const dlc = { wonmi:"#6b8cba", ojeong:"#c08060", sosa:"#5fa880" };
+const dlp = { wonmi:[37.534,126.738], ojeong:[37.548,126.796], sosa:[37.458,126.790] };
+
+Object.entries(districtBoundaries).forEach(([key,coords]) => {
+  L.polygon(coords,{ color:dlc[key], weight:2, dashArray:"8 6",
+    fill:true, fillColor:dlc[key], fillOpacity:0.04, interactive:false }).addTo(map);
+  L.marker(dlp[key],{ icon:L.divIcon({ className:'',
+    html:`<div style="font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;
+      color:${dlc[key]};opacity:.75;letter-spacing:2px;white-space:nowrap;
+      text-shadow:0 1px 3px rgba(255,255,255,.9);border-bottom:2px dashed ${dlc[key]};
+      padding-bottom:2px;">${districtName[key]}</div>`,
+    iconAnchor:[20,0] }), interactive:false }).addTo(map);
+});
+
+const markerMap = {};
+patients.forEach(p => {
+  const c = groupColors[p.group];
+  const tc = c.dark ? '#7a5c00' : 'white';
+  const icon = L.divIcon({
+    className:'',
+    html:`<div class="name-label">
+            <span class="gb" style="background:${c.bg};color:${tc};">${p.group}</span>
+            ${p.no}. ${p.name}
+          </div>`,
+    iconAnchor:[0,10],
+  });
+  const marker = L.marker([p.lat,p.lng],{ icon }).addTo(map);
+  markerMap[p.no] = marker;
+  marker.bindPopup(`
+    <div class="popup-header" style="background:${c.bg};color:${tc};">
+      ${p.gender==='여'?'👩':'👨'} [${p.group}조] ${p.no}. ${p.name}
+      <span class="popup-badge" style="background:rgba(0,0,0,0.15);color:${tc};">${districtName[p.district]}</span>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row"><span class="popup-label">조</span>
+        <span class="popup-value" style="font-weight:700;color:${c.border};">${groupLabels[p.group]}</span></div>
+      <div class="popup-row"><span class="popup-label">나이·성별</span>
+        <span class="popup-value">${p.age}세 (${p.gender})</span></div>
+      <div class="popup-row"><span class="popup-label">가구형태</span>
+        <span class="popup-value">${p.household}</span></div>
+      <div class="popup-row"><span class="popup-label">주소</span>
+        <span class="popup-value">${p.address}</span></div>
+      <div class="popup-row"><span class="popup-label">건강리더</span>
+        <span class="popup-value">${p.leader}</span></div>
+    </div>`, { maxWidth:260 });
+});
+
+const groups = ['A','B','C','D','E'];
+const sideBody = document.getElementById('sideBody');
+groups.forEach(g => {
+  const c = groupColors[g];
+  const tc = c.dark ? '#7a5c00' : 'white';
+  const members = patients.filter(p => p.group === g);
+  const leaders = [...new Set(members.map(p => p.leader))].join(', ');
+  const section = document.createElement('div');
+  section.className = 'group-section';
+  section.innerHTML = `
+    <div class="group-title" style="background:${c.bg};color:${tc};">
+      <span class="group-badge-large" style="color:${tc};">${g}</span>
+      <span>${groupLabels[g]}</span>
+      <span class="group-leader">건강리더: ${leaders}</span>
+    </div>
+    <table class="patient-table">
+      <thead><tr>
+        <th style="width:22px;">#</th><th>이름</th>
+        <th style="width:22px;">성별</th><th style="width:32px;">나이</th>
+        <th>가구형태</th><th>주소</th>
+      </tr></thead>
+      <tbody>
+        ${members.map(p => `
+        <tr data-no="${p.no}" style="cursor:pointer;" title="지도에서 보기">
+          <td class="no-cell">${p.no}</td>
+          <td class="name-cell">${p.name}</td>
+          <td class="gender-cell">${p.gender}</td>
+          <td class="age-cell">${p.age}</td>
+          <td class="household-cell">${p.household}</td>
+          <td class="addr-cell">${p.address}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  sideBody.appendChild(section);
+});
+
+sideBody.addEventListener('click', e => {
+  const row = e.target.closest('tr[data-no]');
+  if (!row) return;
+  const no = +row.dataset.no;
+  const p = patients.find(x => x.no === no);
+  const m = markerMap[no];
+  if (!p || !m) return;
+  document.querySelectorAll('tr[data-no]').forEach(r => r.classList.remove('highlight'));
+  row.classList.add('highlight');
+  if (window.innerWidth <= 768) {
+    showTab('map', document.querySelector('.tab-btn'));
+  }
+  map.setView([p.lat, p.lng], 15, { animate:true });
+  setTimeout(() => m.openPopup(), 400);
+});
+
+function showTab(tab, btn) {
+  const mapEl  = document.getElementById('map');
+  const sideEl = document.querySelector('.side');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (tab === 'map') {
+    mapEl.style.display  = '';
+    sideEl.style.display = 'none';
+    setTimeout(() => map.invalidateSize(), 100);
+  } else {
+    mapEl.style.display  = 'none';
+    sideEl.style.display = '';
+  }
+}
+</script>
+</body>
+</html>
