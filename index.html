@@ -18,8 +18,7 @@ body {
   flex-direction:column;
   overflow:hidden;
 }
-.tab-bar { display:none; }
-
+/* ─── 헤더 ─── */
 header {
   background:#1a4f72;
   color:white;
@@ -39,55 +38,109 @@ header .icon {
 }
 header h1 { font-size:16px;font-weight:700;letter-spacing:-.3px; }
 header p  { font-size:11px;opacity:.7;margin-top:1px; }
-.legend { display:flex;gap:12px;margin-left:auto;flex-wrap:wrap;align-items:center; }
-.legend-item { display:flex;align-items:center;gap:5px;font-size:11px;opacity:.9;white-space:nowrap; }
-.legend-dot { width:11px;height:11px;border-radius:3px;flex-shrink:0; }
+.legend {
+  display:flex;gap:12px;margin-left:auto;flex-wrap:wrap;align-items:center;
+}
+.legend-item {
+  display:flex;align-items:center;gap:5px;
+  font-size:11px;opacity:.9;white-space:nowrap;
+}
+.legend-dot {
+  width:11px;height:11px;border-radius:3px;flex-shrink:0;
+}
 
-.main { display:flex;flex:1;overflow:hidden; }
+/* ─── 메인 레이아웃 ─── */
+.main {
+  display:flex;
+  flex:1;
+  overflow:hidden;
+}
+
+/* ─── 지도 ─── */
 #map { flex:1;min-width:0; }
 
+/* ─── 사이드 패널 ─── */
 .side {
-  width:380px;flex-shrink:0;background:#fff;
+  width:380px;
+  flex-shrink:0;
+  background:#fff;
   border-left:1px solid #d8e4f0;
-  display:flex;flex-direction:column;overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
-.side-header { padding:12px 16px 10px;background:#f4f8fc;border-bottom:1px solid #d8e4f0;flex-shrink:0; }
-.side-header h2 { font-size:13px;font-weight:700;color:#1a4f72;letter-spacing:-.2px; }
+.side-header {
+  padding:12px 16px 10px;
+  background:#f4f8fc;
+  border-bottom:1px solid #d8e4f0;
+  flex-shrink:0;
+}
+.side-header h2 {
+  font-size:13px;font-weight:700;color:#1a4f72;letter-spacing:-.2px;
+}
 .side-header p { font-size:11px;color:#888;margin-top:2px; }
-.side-body { flex:1;overflow-y:auto;padding:10px 12px 16px; }
+.side-body {
+  flex:1;overflow-y:auto;padding:10px 12px 16px;
+}
 .side-body::-webkit-scrollbar { width:5px; }
 .side-body::-webkit-scrollbar-thumb { background:#c5d5e8;border-radius:3px; }
 
+/* ─── 그룹 섹션 ─── */
 .group-section { margin-bottom:14px; }
 .group-title {
   display:flex;align-items:center;gap:8px;
-  padding:6px 10px;border-radius:6px 6px 0 0;
-  font-size:12px;font-weight:800;letter-spacing:.3px;
+  padding:6px 10px;
+  border-radius:6px 6px 0 0;
+  font-size:12px;font-weight:800;
+  letter-spacing:.3px;
 }
 .group-badge-large {
   width:22px;height:22px;border-radius:5px;
   display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:900;background:rgba(255,255,255,0.3);flex-shrink:0;
+  font-size:13px;font-weight:900;
+  background:rgba(255,255,255,0.3);
+  flex-shrink:0;
 }
 .group-leader { margin-left:auto;font-size:11px;font-weight:600;opacity:.85; }
 
+/* ─── 테이블 ─── */
 .patient-table {
-  width:100%;border-collapse:collapse;font-size:11.5px;
-  border:1px solid #e0eaf4;border-top:none;border-radius:0 0 6px 6px;overflow:hidden;
+  width:100%;border-collapse:collapse;
+  font-size:11.5px;
+  border:1px solid #e0eaf4;
+  border-top:none;
+  border-radius:0 0 6px 6px;
+  overflow:hidden;
 }
-.patient-table thead tr { background:#f0f6fc; }
-.patient-table th { padding:5px 7px;font-size:10.5px;font-weight:700;color:#5a7a9a;text-align:left;border-bottom:1px solid #d8e8f5;white-space:nowrap; }
-.patient-table td { padding:6px 7px;color:#2d2d2d;border-bottom:1px solid #edf3fb;vertical-align:top;line-height:1.35; }
+.patient-table thead tr {
+  background:#f0f6fc;
+}
+.patient-table th {
+  padding:5px 7px;
+  font-size:10.5px;font-weight:700;color:#5a7a9a;
+  text-align:left;border-bottom:1px solid #d8e8f5;
+  white-space:nowrap;
+}
+.patient-table td {
+  padding:6px 7px;color:#2d2d2d;
+  border-bottom:1px solid #edf3fb;
+  vertical-align:top;line-height:1.35;
+}
 .patient-table tr:last-child td { border-bottom:none; }
 .patient-table tr:hover td { background:#f5f9ff; }
 .patient-table tr.highlight td { background:#fffbe6; }
-.no-cell { font-weight:800;color:#666;font-size:11px;text-align:center;width:22px; }
+
+.no-cell {
+  font-weight:800;color:#666;font-size:11px;
+  text-align:center;width:22px;
+}
 .name-cell { font-weight:700;white-space:nowrap; }
 .gender-cell { text-align:center;width:20px;color:#555; }
 .age-cell { text-align:center;width:28px;font-weight:600; }
 .household-cell { color:#666;font-size:10.5px; }
 .addr-cell { color:#444;font-size:10px;line-height:1.4; }
 
+/* ─── 이름 라벨 (지도) ─── */
 .name-label {
   display:inline-flex;align-items:center;gap:5px;
   background:white;border:none;border-radius:6px;
@@ -100,49 +153,92 @@ header p  { font-size:11px;opacity:.7;margin-top:1px; }
 }
 .name-label .gb {
   display:inline-flex;align-items:center;justify-content:center;
-  width:20px;height:20px;border-radius:4px;font-size:11px;font-weight:900;flex-shrink:0;
+  width:20px;height:20px;border-radius:4px;
+  font-size:11px;font-weight:900;flex-shrink:0;
 }
-.name-label:hover { transform:scale(1.1) translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.38);z-index:999!important; }
+.name-label:hover {
+  transform:scale(1.1) translateY(-2px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.38);
+  z-index:999!important;
+}
 
-.leaflet-popup-content-wrapper { border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.15);border:none;padding:0;overflow:hidden; }
+/* ─── 팝업 ─── */
+.leaflet-popup-content-wrapper {
+  border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  border:none;padding:0;overflow:hidden;
+}
 .leaflet-popup-content { margin:0;width:240px!important; }
-.popup-header { padding:11px 15px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px; }
+.popup-header {
+  padding:11px 15px;font-weight:700;font-size:14px;
+  display:flex;align-items:center;gap:7px;
+}
 .popup-body { padding:11px 15px;background:white; }
-.popup-row { display:flex;gap:8px;margin-bottom:6px;font-size:12.5px;color:#444;align-items:flex-start; }
+.popup-row {
+  display:flex;gap:8px;margin-bottom:6px;
+  font-size:12.5px;color:#444;align-items:flex-start;
+}
 .popup-row:last-child { margin-bottom:0; }
 .popup-label { color:#999;font-size:11px;font-weight:600;min-width:50px;margin-top:1px; }
 .popup-value { color:#222;line-height:1.4; }
-.popup-badge { display:inline-block;border-radius:8px;padding:1px 7px;font-size:10.5px;font-weight:700;margin-left:4px; }
+.popup-badge {
+  display:inline-block;border-radius:8px;
+  padding:1px 7px;font-size:10.5px;font-weight:700;margin-left:4px;
+}
 
+/* ══════════════════════════════════════
+   모바일 반응형 (768px 이하)
+══════════════════════════════════════ */
 @media (max-width: 768px) {
+
+  /* 헤더: 한 줄로, 레전드 숨김 */
   .legend { display:none; }
   header { padding:10px 14px; }
-  header h1 { font-size:14px; }
-  header p  { display:none; }
-  body { height:auto; overflow:auto; }
-  .main { flex-direction:column;overflow:visible;flex:none; }
-  #map { height:55vw;min-height:240px;max-height:360px;flex:none; }
-  .tab-bar {
-    display:flex;flex-shrink:0;
-    border-bottom:2px solid #d8e4f0;background:#fff;
-    position:sticky;top:0;z-index:500;
+  header h1 { font-size:15px; }
+  header p  { font-size:11px; }
+
+  /* body: 스크롤 가능 */
+  body { height:auto; min-height:100vh; overflow-y:auto; }
+
+  /* 메인: 지도 위, 표 아래 세로 배치 */
+  .main {
+    flex-direction:column;
+    overflow:visible;
+    flex:none;
+    height:auto;
   }
-  .tab-btn {
-    flex:1;padding:10px 0;font-size:13px;font-weight:700;
-    font-family:'Noto Sans KR',sans-serif;
-    color:#888;background:none;border:none;
-    border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;
+
+  /* 지도: 화면의 50% 높이로 고정 */
+  #map {
+    height:50vh;
+    min-height:260px;
+    flex:none;
+    width:100%;
   }
-  .tab-btn.active { color:#1a4f72;border-bottom:3px solid #1a4f72; }
-  .side { width:100%;border-left:none;border-top:1px solid #d8e4f0;overflow:visible;flex:none;min-height:300px; }
-  .side-body { overflow:visible;padding:8px 10px 20px;max-height:none; }
+
+  /* 사이드 패널: 지도 바로 아래, 전체 폭 */
+  .side {
+    width:100%;
+    border-left:none;
+    border-top:2px solid #d8e4f0;
+    overflow:visible;
+    flex:none;
+    height:auto;
+  }
+  .side-body {
+    overflow:visible;
+    padding:8px 10px 24px;
+    height:auto;
+  }
   .side-header { padding:10px 12px 8px; }
   .side-header p { display:none; }
+
+  /* 테이블 */
   .patient-table { font-size:12px; }
-  .patient-table th { font-size:11px;padding:6px 6px; }
-  .patient-table td { padding:7px 6px; }
+  .patient-table th { font-size:11px; padding:6px 5px; }
+  .patient-table td { padding:7px 5px; }
   .addr-cell { font-size:11px; }
   .group-title { font-size:13px; }
+  .group-section { margin-bottom:12px; }
 }
 </style>
 </head>
@@ -157,12 +253,11 @@ header p  { font-size:11px;opacity:.7;margin-top:1px; }
   <div class="legend" id="legend"></div>
 </header>
 
-<div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab('map',this)">🗺 지도</button>
-  <button class="tab-btn" onclick="showTab('table',this)">📋 명단표</button>
-</div>
+
 <div class="main">
   <div id="map"></div>
+
+  <!-- 사이드 패널 -->
   <div class="side">
     <div class="side-header">
       <h2>📋 그룹별 대상자 명단</h2>
@@ -177,15 +272,15 @@ const patients = [
   { no:1,  group:"A", name:"권연채", gender:"여", age:75, household:"독거",        address:"원미구 신흥로321번길 28-9, 흥립약대아파트 2동 211호",      leader:"공춘화",        lat:37.5142, lng:126.7724, district:"wonmi"  },
   { no:2,  group:"A", name:"김광자", gender:"여", age:82, household:"노인부부",    address:"원미구 중동로 166, 1713동 104호 (복사골)",                 leader:"공춘화",        lat:37.4952, lng:126.7663, district:"wonmi"  },
   { no:3,  group:"A", name:"문경금", gender:"여", age:77, household:"배우자·자녀", address:"원미구 옥산로 65, 1022동 201호 (꿈마을)",                  leader:"공춘화",        lat:37.4990, lng:126.7800, district:"wonmi"  },
-  { no:4,  group:"B", name:"포옥남", gender:"여", age:77, household:"독거",        address:"원미구 계남로 123, 117동 1407호 (한라마을)",               leader:"유경임",        lat:37.5115, lng:126.7660, district:"wonmi"  },
+  { no:4,  group:"B", name:"포옥남", gender:"여", age:77, household:"독거",        address:"원미구 계남로 123, 117동 1407호 (한라마을)",               leader:"유경임",        lat:37.5115, lng:126.766, district:"wonmi"  },
   { no:5,  group:"B", name:"윤석연", gender:"여", age:70, household:"독거",        address:"원미구 계남로 123, 117동 1305호 (한라마을)",               leader:"송호숙",        lat:37.5085, lng:126.7608, district:"wonmi"  },
   { no:6,  group:"B", name:"김중구", gender:"남", age:77, household:"노인부부",    address:"원미구 계남로 126, 418동 1206호 (금강마을)",               leader:"송호숙",        lat:37.5057, lng:126.7588, district:"wonmi"  },
-  { no:7,  group:"C", name:"이재완", gender:"남", age:89, household:"독거",        address:"오정구 고리울로 74번길 6, 1동 107호 (고강동 홍익아파트)",   leader:"권연옥·권정옥", lat:37.5290, lng:126.8228, district:"ojeong" },
+  { no:7,  group:"C", name:"이재완", gender:"남", age:89, household:"독거",        address:"오정구 고리울로 74번길 6, 1동 107호 (고강동 홍익아파트)",   leader:"권연옥·권정옥", lat:37.529, lng:126.8228, district:"ojeong" },
   { no:8,  group:"C", name:"정규혁", gender:"남", age:74, household:"독거",        address:"오정구 역곡로 504번길 117-1, 202호",                      leader:"권연옥·권정옥", lat:37.5178, lng:126.8055, district:"ojeong" },
   { no:9,  group:"C", name:"이순녀", gender:"여", age:79, household:"기타동거",    address:"오정구 고강로 56번길 16-23, 6동 202호 (원종동 두산빌라)",   leader:"권연옥",        lat:37.5333, lng:126.8030, district:"ojeong" },
   { no:10, group:"D", name:"조영희", gender:"여", age:78, household:"자녀동거",    address:"삼작로 416번길 24, 1차 506호 (원종동 건우아파트)",          leader:"박문순",        lat:37.5285, lng:126.7990, district:"ojeong" },
   { no:11, group:"D", name:"윤임순", gender:"여", age:78, household:"독거",        address:"삼작로410번길 79, A동 101호 (작동 복화주택)",               leader:"박문순",        lat:37.5145, lng:126.8092, district:"ojeong" },
-  { no:12, group:"D", name:"박애자", gender:"여", age:84, household:"독거",        address:"오정구 고리울로52번길 57-5, B동 1층 2호 (고강동 성암주택)", leader:"박문순",        lat:37.5262, lng:126.8283, district:"ojeong" },
+  { no:12, group:"D", name:"박애자", gender:"여", age:84, household:"독거",        address:"오정구 고리울로52번길 57-5, B동 1층 2호 (고강동 성암주택)", leader:"박문순",        lat:37.5262, lng:126.82830, district:"ojeong" },
   { no:13, group:"E", name:"권오예", gender:"여", age:86, household:"독거",        address:"양지로 134, 104동 1006호 (옥길동 부천옥길LH1단지)",         leader:"장영예",        lat:37.4726, lng:126.8192, district:"sosa"   },
   { no:14, group:"E", name:"문계순", gender:"여", age:83, household:"독거",        address:"양지로 134, 104동 1013호 (옥길동 부천옥길LH1단지)",         leader:"장영예",        lat:37.4692, lng:126.8158, district:"sosa"   },
   { no:15, group:"E", name:"장확실", gender:"여", age:72, household:"독거",        address:"양지로 20, 109동 308호 (괴안동 범박휴먼시아1단지)",          leader:"장영예",        lat:37.4778, lng:126.8145, district:"sosa"   },
@@ -201,16 +296,20 @@ const groupColors = {
 const groupLabels = { A:"A조 (1~3번)", B:"B조 (4~6번)", C:"C조 (7~9번)", D:"D조 (10~12번)", E:"E조 (13~15번)" };
 const districtName = { wonmi:"원미구", ojeong:"오정구", sosa:"소사구" };
 
+// ── 레전드 ──────────────────────────────────────────────
 const legendEl = document.getElementById('legend');
 Object.entries(groupColors).forEach(([g,c]) => {
-  legendEl.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${c.bg};"></div>${groupLabels[g]}</div>`;
+  legendEl.innerHTML += `<div class="legend-item">
+    <div class="legend-dot" style="background:${c.bg};"></div>${groupLabels[g]}</div>`;
 });
 
+// ── 지도 ────────────────────────────────────────────────
 const map = L.map('map',{ center:[37.503,126.790], zoom:13 });
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
   attribution:'© OpenStreetMap © CARTO', subdomains:'abcd', maxZoom:19
 }).addTo(map);
 
+// 구 경계
 const districtBoundaries = {
   wonmi:  [[37.5380,126.7380],[37.5380,126.7950],[37.4850,126.7950],[37.4850,126.7380]],
   ojeong: [[37.5450,126.7900],[37.5450,126.8420],[37.5050,126.8420],[37.5050,126.7900]],
@@ -230,10 +329,13 @@ Object.entries(districtBoundaries).forEach(([key,coords]) => {
     iconAnchor:[20,0] }), interactive:false }).addTo(map);
 });
 
+// 마커 & 사이드 패널
 const markerMap = {};
+
 patients.forEach(p => {
   const c = groupColors[p.group];
   const tc = c.dark ? '#7a5c00' : 'white';
+
   const icon = L.divIcon({
     className:'',
     html:`<div class="name-label">
@@ -242,8 +344,10 @@ patients.forEach(p => {
           </div>`,
     iconAnchor:[0,10],
   });
+
   const marker = L.marker([p.lat,p.lng],{ icon }).addTo(map);
   markerMap[p.no] = marker;
+
   marker.bindPopup(`
     <div class="popup-header" style="background:${c.bg};color:${tc};">
       ${p.gender==='여'?'👩':'👨'} [${p.group}조] ${p.no}. ${p.name}
@@ -263,13 +367,18 @@ patients.forEach(p => {
     </div>`, { maxWidth:260 });
 });
 
+// ── 사이드 패널 렌더링 ──────────────────────────────────
 const groups = ['A','B','C','D','E'];
 const sideBody = document.getElementById('sideBody');
+
 groups.forEach(g => {
   const c = groupColors[g];
   const tc = c.dark ? '#7a5c00' : 'white';
   const members = patients.filter(p => p.group === g);
+
+  // 건강리더 목록 (중복 제거)
   const leaders = [...new Set(members.map(p => p.leader))].join(', ');
+
   const section = document.createElement('div');
   section.className = 'group-section';
   section.innerHTML = `
@@ -279,11 +388,16 @@ groups.forEach(g => {
       <span class="group-leader">건강리더: ${leaders}</span>
     </div>
     <table class="patient-table">
-      <thead><tr>
-        <th style="width:22px;">#</th><th>이름</th>
-        <th style="width:22px;">성별</th><th style="width:32px;">나이</th>
-        <th>가구형태</th><th>주소</th>
-      </tr></thead>
+      <thead>
+        <tr>
+          <th style="width:22px;">#</th>
+          <th>이름</th>
+          <th style="width:22px;">성별</th>
+          <th style="width:32px;">나이</th>
+          <th>가구형태</th>
+          <th>주소</th>
+        </tr>
+      </thead>
       <tbody>
         ${members.map(p => `
         <tr data-no="${p.no}" style="cursor:pointer;" title="지도에서 보기">
@@ -296,9 +410,11 @@ groups.forEach(g => {
         </tr>`).join('')}
       </tbody>
     </table>`;
+
   sideBody.appendChild(section);
 });
 
+// 테이블 행 클릭 → 지도 이동 & 팝업 열기
 sideBody.addEventListener('click', e => {
   const row = e.target.closest('tr[data-no]');
   if (!row) return;
@@ -306,28 +422,14 @@ sideBody.addEventListener('click', e => {
   const p = patients.find(x => x.no === no);
   const m = markerMap[no];
   if (!p || !m) return;
+
+  // 하이라이트
   document.querySelectorAll('tr[data-no]').forEach(r => r.classList.remove('highlight'));
   row.classList.add('highlight');
-  if (window.innerWidth <= 768) {
-    showTab('map', document.querySelector('.tab-btn'));
-  }
+
   map.setView([p.lat, p.lng], 15, { animate:true });
   setTimeout(() => m.openPopup(), 400);
 });
-
-function showTab(tab, btn) {
-  const mapEl  = document.getElementById('map');
-  const sideEl = document.querySelector('.side');
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  if (tab === 'map') {
-    mapEl.style.display  = '';
-    sideEl.style.display = 'none';
-    setTimeout(() => map.invalidateSize(), 100);
-  } else {
-    mapEl.style.display  = 'none';
-    sideEl.style.display = '';
-  }
 }
 </script>
 </body>
