@@ -18,6 +18,17 @@ body {
   flex-direction:column;
   overflow:hidden;
 }
+/* ─── 탭바 ─── */
+.tab-bar { display:none; }
+.tab-btn {
+  flex:1; padding:10px 0; font-size:13px; font-weight:700;
+  font-family:'Noto Sans KR',sans-serif;
+  color:#888; background:none; border:none;
+  border-bottom:3px solid transparent;
+  cursor:pointer; transition:all .2s;
+}
+.tab-btn.active { color:#1a4f72; border-bottom:3px solid #1a4f72; }
+
 /* ─── 헤더 ─── */
 header {
   background:#1a4f72;
@@ -138,7 +149,6 @@ header p  { font-size:11px;opacity:.7;margin-top:1px; }
 .gender-cell { text-align:center;width:20px;color:#555; }
 .age-cell { text-align:center;width:28px;font-weight:600; }
 .household-cell { color:#666;font-size:10.5px; }
-.addr-cell { color:#444;font-size:10px;line-height:1.4; }
 
 /* ─── 이름 라벨 (지도) ─── */
 .name-label {
@@ -196,33 +206,43 @@ header p  { font-size:11px;opacity:.7;margin-top:1px; }
   header h1 { font-size:15px; }
   header p  { font-size:11px; }
 
-  /* body: 스크롤 가능 */
-  body { height:auto; min-height:100vh; overflow-y:auto; }
-
-  /* 메인: 지도 위, 표 아래 세로 배치 */
-  .main {
-    flex-direction:column;
-    overflow:visible;
-    flex:none;
-    height:auto;
+  /* 탭바 표시 */
+  .tab-bar {
+    display:flex;
+    flex-shrink:0;
+    background:#fff;
+    border-bottom:2px solid #d8e4f0;
+    position:sticky; top:0; z-index:500;
   }
 
-  /* 지도: 화면의 50% 높이로 고정 */
+  /* body: 탭 모드에서 overflow 숨김 */
+  body { height:100vh; overflow:hidden; }
+
+  /* 메인: 탭 컨텐츠 영역 — 남은 높이 꽉 채움 */
+  .main {
+    flex-direction:column;
+    flex:1;
+    overflow:hidden;
+    height:0; /* flex:1이 동작하도록 */
+  }
+
+  /* 지도: .main 높이 100% 꽉 채움 */
   #map {
-    height:65vh;
-    min-height:320px;
-    flex:none;
+    height:100%;
+    min-height:0;
+    flex:1;
     width:100%;
   }
 
-  /* 사이드 패널: 지도 바로 아래, 전체 폭 */
+  /* 사이드 패널: 탭 전환 시 100% 높이 스크롤 */
   .side {
     width:100%;
     border-left:none;
-    border-top:2px solid #d8e4f0;
-    overflow:visible;
-    flex:none;
-    height:auto;
+    border-top:none;
+    overflow-y:auto;
+    flex:1;
+    height:100%;
+    display:none; /* 기본 숨김, JS로 전환 */
   }
   .side-body {
     overflow:visible;
@@ -236,7 +256,6 @@ header p  { font-size:11px;opacity:.7;margin-top:1px; }
   .patient-table { font-size:12px; }
   .patient-table th { font-size:11px; padding:6px 5px; }
   .patient-table td { padding:7px 5px; }
-  .addr-cell { font-size:11px; }
   .group-title { font-size:13px; }
   .group-section { margin-bottom:12px; }
 }
@@ -254,6 +273,10 @@ header p  { font-size:11px;opacity:.7;margin-top:1px; }
 </header>
 
 
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('map',this)">🗺 지도</button>
+  <button class="tab-btn" onclick="showTab('table',this)">📋 명단표</button>
+</div>
 <div class="main">
   <div id="map"></div>
 
@@ -360,8 +383,7 @@ patients.forEach(p => {
         <span class="popup-value">${p.age}세 (${p.gender})</span></div>
       <div class="popup-row"><span class="popup-label">가구형태</span>
         <span class="popup-value">${p.household}</span></div>
-      <div class="popup-row"><span class="popup-label">주소</span>
-        <span class="popup-value">${p.address}</span></div>
+
       <div class="popup-row"><span class="popup-label">건강리더</span>
         <span class="popup-value">${p.leader}</span></div>
     </div>`, { maxWidth:260 });
@@ -395,7 +417,6 @@ groups.forEach(g => {
           <th style="width:22px;">성별</th>
           <th style="width:32px;">나이</th>
           <th>가구형태</th>
-          <th>주소</th>
         </tr>
       </thead>
       <tbody>
@@ -406,7 +427,6 @@ groups.forEach(g => {
           <td class="gender-cell">${p.gender}</td>
           <td class="age-cell">${p.age}</td>
           <td class="household-cell">${p.household}</td>
-          <td class="addr-cell">${p.address}</td>
         </tr>`).join('')}
       </tbody>
     </table>`;
@@ -430,6 +450,23 @@ sideBody.addEventListener('click', e => {
   map.setView([p.lat, p.lng], 15, { animate:true });
   setTimeout(() => m.openPopup(), 400);
 });
+}
+
+function showTab(tab, btn) {
+  const mapEl  = document.getElementById('map');
+  const sideEl = document.querySelector('.side');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (tab === 'map') {
+    mapEl.style.display  = '';
+    sideEl.style.display = 'none';
+    // 지도 크기 재계산 (탭 전환 후 빈 화면 방지)
+    setTimeout(() => map.invalidateSize(), 50);
+    setTimeout(() => map.invalidateSize(), 300);
+  } else {
+    mapEl.style.display  = 'none';
+    sideEl.style.display = '';
+  }
 }
 </script>
 </body>
